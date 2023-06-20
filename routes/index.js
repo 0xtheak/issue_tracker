@@ -21,7 +21,11 @@ router.route('/register')
     .get( indexController.register)
     .post(indexController.registerPost)
 
-
+// session destroy route
 router.route('/logout')
         .get(indexController.logout)
+
+
+// project route
+router.use('/project', require('./projectRoutes'));
 module.exports = router;

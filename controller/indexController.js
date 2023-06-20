@@ -19,6 +19,7 @@ module.exports  = {
     },
 
     loginPost : (req, res) => {
+        req.flash('success', 'Logged in successfully!');
         return res.redirect('/');
     },
 
@@ -53,7 +54,7 @@ module.exports  = {
                             password : result,
                             status : true
                         });
-                        // req.flash('success', 'Account created successfully');
+                        req.flash('success', 'Account created successfully');
                         return res.redirect('/login');
                     }
                     
@@ -77,7 +78,7 @@ module.exports  = {
                 
                 return next(err);
             }
-            // req.flash('success', 'You Have Logged out!');
+            req.flash('success', 'You Have Logged out!');
             return res.redirect('/login');
         });
     }

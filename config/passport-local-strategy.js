@@ -17,14 +17,15 @@ passport.use(new LocalStrategy({
                 // password comparing
                 bcrypt.compare(password, user.password, function(err, result){
                     if(result){
+                        
                         return done(null, user);
                     }
-                    // req.flash('error', 'Invalid credentials');
+                    req.flash('error', 'Invalid credentials');
                     return done(null, false);
                     
                 });
             }else{
-                // req.flash('error', 'Invalid credentials');
+                req.flash('error', 'Invalid credentials');
                 return done(null, false);
             }
             
@@ -60,7 +61,7 @@ passport.checkAuthetication = function(req, res, next){
         return next();
     }
 
-    // req.flash('error', 'Please Sign in first');
+    req.flash('error', 'Please Sign in first');
     // if the user is not sign in
     return res.redirect('/login');
 }
