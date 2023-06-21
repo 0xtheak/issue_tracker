@@ -15,8 +15,6 @@ const flash = require('connect-flash');
 const customMWare = require('./config/middleware');
 
 
-
-
 // sass middleware
 app.use(sassMiddleware({
     src : './assets/scss',
@@ -64,16 +62,20 @@ app.use(session({
      })
 }));
 
-// passportjs 
+// Configure and use Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(passport.setAuthenticatedUser);
 
 // flash notification
 app.use(flash());
 app.use(customMWare.setFalsh);
 
+app.use((req, resp, next) => {
+    resp.locals.user = req.user;
+    // console.log(req.session.user);
+    next();
+  });
 
 app.use('/', require('./routes/index'));
 

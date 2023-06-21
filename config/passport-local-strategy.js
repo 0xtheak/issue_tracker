@@ -9,15 +9,17 @@ passport.use(new LocalStrategy({
     usernameField : 'email',
     passReqToCallback : true
     },
-    async function(req, email, password, done){
+    function(req, email, password, done){
         // find a user and establish the identity
-        const user = await User.findOne({email : email});
-       
+        User.findOne({email : email}, (err, user) => {
+            if(err){
+                // req.flash('error', err);
+                return done(err);
+            }
             if(user){
                 // password comparing
                 bcrypt.compare(password, user.password, function(err, result){
                     if(result){
-                        
                         return done(null, user);
                     }
                     req.flash('error', 'Invalid credentials');
@@ -29,7 +31,8 @@ passport.use(new LocalStrategy({
                 return done(null, false);
             }
             
-        }
+        });
+    }
 ));
 
 
@@ -42,16 +45,15 @@ passport.serializeUser(function(user, done){
 
 
 // deserializing the user  from the key in the cookies
-passport.deserializeUser(async function(id, done){
-    const user = User.findById(id);
-   
-        if(user){
-            
-            return done(null, user);
+passport.deserializeUser(function(id, done){
+    User.findById(id, function(err, user){
+        if(err){
+            console.log('Error in finding  user --> Passport');
+            return done(err);
         }
 
-    console.log('user didnt exit in database --> Passport');  
-    return done(null, false);
+        return done(null, user);
+    })
 });
 
 // check if the user is authenticated

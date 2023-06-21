@@ -6,13 +6,14 @@ const saltRounds = 10;
 module.exports  = {
     index : async(req,res) => {
         let title = 'Issue Tracker';
-        console.log(req);
-        // const user = req.userData;
-        // const projects = await Project.find({type : 'PUBLIC'});
-        // const privateProjects = await Project.find({user : user._id});
-        return res.render('index',{title});
+        const projects = await Project.find({type : 'PUBLIC'});
+        const privateProjects = await Project.find({user : res.locals.user._id});
+        return res.render('index',{title, projects, privateProjects});
     },
     login : (req, res) => {
+        if(req.isAuthenticated()){
+            return res.redirect('/');
+        }
         return res.render('login', {
             title : 'Login',
         });
@@ -24,6 +25,9 @@ module.exports  = {
     },
 
     register : (req,res) => {
+        if(req.isAuthenticated()){
+            return res.redirect('/');
+        }
         return res.render('register', {
             title : 'Register'
         });

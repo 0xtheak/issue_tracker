@@ -10,40 +10,126 @@ module.exports = {
     }, 
     createPost : async (req, res) => {
         try {
-            const { title, description, author, type } = req.body;
-            const user = req.userData;
+            const { title, description, author, id, type } = req.body;
+            
             const project = new Project({
-                title, description, author, user: user._id, type
+                title, description, author, user : id, type
             });
             project.save((err) => {
                 if (err) {
-                    // req.session.message = {
-                    //     type: "error",
-                    //     message: err.message || 'Unable to create project',
-                    // };
+                    req.flash("error", "Unable to create project")
                     return res.redirect('back' || '/project/create')
                 }
-                User.findByIdAndUpdate(user._id, { $push: { projects: { project: project._id } } }, { new: true }, (error, userDetails) => {
+                User.findByIdAndUpdate(id, { $push: { projects: { project: project._id } } }, { new: true }, (error, userDetails) => {
                     if (error) {
-                        req.session.message = {
-                            type: "error",
-                            message: err.message || 'Error Occured while adding project to user table',
-                        };
+                        req.flash("error", "Error Occured while adding project to user table");
                         return res.redirect('/')
                     }
-                    // req.session.message = {
-                    //     type: "success",
-                    //     message: "Project Created Successfully",
-                    // };
+                    req.flash("success", "Project Created Successfully")
                     return res.redirect("/");
                 });
             });
         } catch (error) {
+            req.flash("error", "Internal server error")
+            return res.redirect('/project/create');
+        }
+    },
+
+    viewProject: async (req, res) => {
+        try {
+            const slug = req.params.slug;
+            const project = await Project.findOne({ slug: slug }).populate('issues').exec();
+            if (project) {
+                let title = project.title;
+                return res.render('view', { project, title });
+            }
             req.session.message = {
                 type: 'error',
-                message: error.message || 'Internal Server Error'
+                message: 'Project Not Found'
             };
-            return resp.redirect('/project/create');
+            return res.redirect('/');
+        } catch (error) {
+            req.session.message = {
+                type: 'error',
+                message: 'Project Not Found'
+            };
+            return res.redirect('/');
+        }
+    },
+    createIssue: async (req, resp) => {
+        try {
+            const projectId = req.params.id;
+            const project = await Project.findById(projectId).exec();
+            if (!project) {
+                req.flash("error", "Project not found!");
+                return resp.status(404).redirect('back');
+            }
+            const title = `Issues for ${project.title}`;
+            return resp.render('createIssue', { project, title });
+        } catch (error) {
+            req.flash("error", "Something went wrong!");
+            return resp.redirect('/');
+        }
+    },
+    createIssuePost: async (req, res) => {
+        try {
+            const projectId = req.params.id;
+            const project = await Project.findById(projectId).exec();
+            if (!project) {
+                req.flash("error", "Project not found!");
+                return res.status(404).redirect('/');
+            }
+            const { title, description } = req.body;
+            if (!title || !description) {
+                
+                req.flash("error", "Title and description are required fields");
+                return res.status(400).redirect('back');
+            }
+            const user = res.locals.user;
+            const newIssue = new Issue({
+                user: user._id,
+                title: title,
+                description: description,
+                project: project._id
+            });
+            const result = await newIssue.save();
+            if (!result) {
+                req.session.message = {
+                    type: 'error',
+                    message: `Issue with title '${title}' could not be saved for project '${project.title}'`
+                };
+                req.flash("error", `Issue with title ${title} could not be saved for project ${project.title}`)
+                return res.status(500).redirect('back');
+            }
+
+            const saveToUser = await User.findOneAndUpdate(
+                {
+                    projects: { $elemMatch: { project: project._id } }
+                },
+                {
+                    $push: { 'projects.$.issues': result._id }
+                },
+                {
+                    new: true
+                }
+            );              
+            if(!saveToUser){
+                
+                req.flash("error", `Issue with title ${title} is saved in issue table  for project ${project.title} but did not saved to user table`)
+                return res.status(500).redirect('back');
+            }
+            const saveToProjectTable = await Project.findByIdAndUpdate(project._id,  { $push: { issues: result._id } },{ new: true });
+            if(!saveToProjectTable){
+                
+                req.flash("error", `Issue with title '${title}' is saved in issue table  for project ${project.title} also saved in user table but did not saved to project table`)
+                return res.status(500).redirect('back');
+            }
+            
+            req.flash("success", `Issue for ${title} was successfully created`)
+            return res.status(201).redirect('/');
+        } catch (error) {
+            req.flash("error", "something went wrong");
+            return res.status(500).redirect('/');
         }
     }
 }
