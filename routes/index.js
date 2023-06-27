@@ -21,6 +21,11 @@ router.route('/register')
     .get( indexController.register)
     .post(indexController.registerPost)
 
+// profile route
+router.route('/profile')
+        .get(indexController.profile)
+        .post(indexController.profilePost)
+
 // session destroy route
 router.route('/logout')
         .get(indexController.logout)

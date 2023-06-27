@@ -7,10 +7,13 @@
             <p class="card-text"><strong>Date:</strong><%= new Date(project.createdAt)  %></p>
             <h6 class="card-subtitle mb-2 text-muted">Issues:</h6>
             <a href="/project/issues/<%= project?._id %>/create" class="btn btn-success">Create Issue</a>
+            <a href="/project/<%= project?._id %>/remove" class="btn btn-success">Delete Project</a>
             <% if (project?.issues?.length > 0) { %>
                 <ul class="list-group list-group-flush">
                     <% project.issues.forEach(issues => { %>
                         <li class="list-group-item"><%= issues.title %></li>
+                        <li class="list-group-item"><%= issues.description %></li>
+                        <li class="list-group-item"><%= issues.status %></li>
                     <% }); %>
                 </ul>
             <% }else{ %>

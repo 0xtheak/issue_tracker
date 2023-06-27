@@ -1,0 +1,22 @@
+
+<div class="profile-container">
+    <h1>Welcome, <%= locals?.user?.name %></h1>
+    <form action="/profile" method="POST">
+    <div class="profile-form-group">
+      <label for="currentPassword">Current Password:</label>
+      <input type="password" id="currentPassword" name="current_password" required>
+    </div>
+    <div class="profile-form-group">
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" name="new_password" required>
+    </div>
+    <div class="profile-form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password"  name="confirm_password" required>
+    </div>
+    <input type="hidden"  name="id" value="<%= locals?.user?._id %>">
+    <div class="profile-form-group">
+      <button class="btn" >Change Password</button>
+    </div>
+</form>
+  </div>

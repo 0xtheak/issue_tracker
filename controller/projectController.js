@@ -73,6 +73,7 @@ module.exports = {
     },
     createIssuePost: async (req, res) => {
         try {
+            
             const projectId = req.params.id;
             const project = await Project.findById(projectId).exec();
             if (!project) {
@@ -94,10 +95,7 @@ module.exports = {
             });
             const result = await newIssue.save();
             if (!result) {
-                req.session.message = {
-                    type: 'error',
-                    message: `Issue with title '${title}' could not be saved for project '${project.title}'`
-                };
+                
                 req.flash("error", `Issue with title ${title} could not be saved for project ${project.title}`)
                 return res.status(500).redirect('back');
             }
@@ -126,10 +124,31 @@ module.exports = {
             }
             
             req.flash("success", `Issue for ${title} was successfully created`)
-            return res.status(201).redirect('/');
+            return res.status(201).redirect('/project/' + saveToProjectTable.slug);
         } catch (error) {
             req.flash("error", "something went wrong");
             return res.status(500).redirect('/');
+        }
+    },
+    removeProject : async (req, res) => {
+        try {
+            let project = await Project.findByIdAndUpdate(req.params.id, {
+                $pullAll : {}
+            });
+            project.remove();
+            const saveToUser = await User.findOneAndUpdate(
+                {
+                    projects: { $elemMatch: { project: project._id } }
+                },
+                {
+                    $pullAll: { 'projects.$.issues': result._id }
+                },
+                {
+                    new: true
+                }
+            ); 
+        }catch {
+            return;
         }
     }
 }

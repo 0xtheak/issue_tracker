@@ -85,6 +85,61 @@ module.exports  = {
             req.flash('success', 'You Have Logged out!');
             return res.redirect('/login');
         });
+    },
+
+    profile : function(req, res) {
+        if(!req.isAuthenticated){
+            return res.redirect('/login');
+        }
+
+        return res.render('profile', {
+            title : 'Profile'
+        })
+    },
+
+    profilePost : async function(req, res){
+        try{
+            if(!req.isAuthenticated){
+                return res.redirect('/login');
+            }
+            const {current_password, new_password, confirm_password, id} = req.body;
+            if(new_password != confirm_password){
+                req.flash("error", "new password and confirm password didn't match");
+                return res.redirect('back');
+            }
+            const user = await User.findById({_id : id});
+            console.log(user);
+            if(user){
+                bcrypt.compare(current_password, user.password, function(err, result){
+                    if(result){
+    
+                        let hashPassword = new Promise((resolve, reject) => {
+                            bcrypt.hash(req.body.new_password, saltRounds, (err, hash) => {
+                                if(err) reject(err);
+                                resolve(hash);
+                            })
+                        });
+                        hashPassword.then((resultant_hash)=>{
+                            if(resultant_hash){
+                                user.password=resultant_hash;
+                                user.save();
+                            }
+                        })
+                        
+                    }
+                });
+                req.flash("success", "User password updated successfully!");
+                return res.redirect('back')
+            }else {
+                req.flash("error", "Didn't find the user");
+                return res.redirect('back');
+            }
+            
+
+        }catch {
+            req.flash("error", "Internal server error");
+            return res.redirect('back');
+        }
     }
     
 }
