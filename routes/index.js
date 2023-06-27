@@ -21,6 +21,15 @@ router.route('/register')
     .get( indexController.register)
     .post(indexController.registerPost)
 
+// passport google oauth
+router.route('/auth/google/')
+        .get(passport.authenticate('google', {
+            scope : ['profile', 'email']
+        }))
+
+router.route('/auth/google/callback')
+        .get(passport.authenticate('google', {failureRedirect : '/login'}), indexController.loginPost)
+
 // profile route
 router.route('/profile')
         .get(indexController.profile)

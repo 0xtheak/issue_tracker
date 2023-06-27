@@ -10,6 +10,7 @@ const favicon = require('serve-favicon');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportGoogle = require('./config/passport-google-oauth-strategy');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const customMWare = require('./config/middleware');
