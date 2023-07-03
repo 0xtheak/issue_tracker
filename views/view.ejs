@@ -1,4 +1,17 @@
 <div class="view-card">
+    <form id="filterForm">
+        <label for="labelFilter">Label:</label>
+        <input type="text" id="labelFilter" name="labelFilter" placeholder="Search By Label">
+    
+        <label for="authorFilter">Author:</label>
+        <input type="text" id="authorFilter" name="authorFilter" placeholder="Search By Author Name">
+    
+        <label for="searchQuery">Search:</label>
+        <input type="text" id="searchQuery" name="searchQuery" placeholder="Search By Title/Description">
+    
+        <button type="submit">Filter</button>
+    </form>
+      
     <div class="view-card-body">
         <h5 class="card-title"><strong>Title:</strong>  <%= project.title  %></h5>
         <p class="card-text"><strong>Description:</strong>  <%- project.description  %></p>
@@ -20,3 +33,26 @@
         <% } %>
     </div>
 </div>
+<script>
+    $('#filterForm').on('submit', function (e) {
+        e.preventDefault();
+        var label = $('#labelFilter').val();
+        var author = $('#authorFilter').val();
+        var search = $('#searchQuery').val();
+        var currentUrl = window.location.href;
+        var desiredValue = currentUrl.split('/').pop();
+        var url = '/project/' + desiredValue;
+        var existingParamsIndex = window.location.href.indexOf('?');
+        if (existingParamsIndex !== -1) {
+            url = window.location.href.substr(0, existingParamsIndex);
+        }
+        url += '?label=' + encodeURIComponent(label) +
+            '&author=' + encodeURIComponent(author) +
+            '&search=' + encodeURIComponent(search);
+        window.location.href = url;
+    });
+
+</script>
+    
+  
+   

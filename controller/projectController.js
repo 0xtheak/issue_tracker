@@ -40,25 +40,41 @@ module.exports = {
             return res.redirect('/project/create');
         }
     },
-
     viewProject: async (req, res) => {
         try {
-            if(!req.isAuthenticated()){
+            if (!req.isAuthenticated()) {
                 return res.redirect('/');
             }
             const slug = req.params.slug;
-            const project = await Project.findOne({ slug: slug }).populate('issues').exec();
+
+            const project = await Project.findOne({ slug: slug })
+                .populate('issues')
+                .exec();
             if (project) {
                 let title = project.title;
+                const label = req.query.label;
+                const author = req.query.author;
+                const search = req.query.search;
+                if (label) {
+                    project.issues = project.issues.filter(issue => issue.labels.includes(label));
+                }
+                if (author) {
+                    project.issues = project.issues.filter(issue => issue.author === author);
+                }
+                if (search) {
+                    const searchRegex = new RegExp(search, 'i');
+                    project.issues = project.issues.filter(issue => searchRegex.test(issue.title) || searchRegex.test(issue.description));
+                }
+
                 return res.render('view', { project, title });
             }
-            req.flash("error", "Project not found!")
+            req.flash('error', 'Project not found!');
             return res.redirect('/');
         } catch (error) {
-            req.flash("error", "Project not found!")
+            req.flash('error', 'Project not found!');
             return res.redirect('/');
         }
-    },
+    },      
     createIssue: async (req, res) => {
         try {
             if(!req.isAuthenticated()){
