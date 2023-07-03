@@ -1,19 +1,41 @@
 <div class="create-issue-container">
-    <div class="card mt-5">
+    <div>
         <form method="post">
             <div class="mb-3 row">
                 <label for="title" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title" name="title">
+                    <input type="text" id="title" name="title">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="description" name="description">
+                    <input type="text"  id="description" name="description">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Create Issue</button>
+
+            <div class="mb-3 row">
+                <% if(issues?.labels?.length>0) { %>
+                    <label for="labels">Choose a label</label>
+                    <select name="labels" id="labels">
+                <% issues.labels.forEach(label => { %>
+                    <option value="<%= label %>"><%= label %></option>
+                <% }); %>
+                    </select>
+                    <% } else { %>
+                <label for="lables" class="col-sm-2 col-form-label">Labels</label>
+                <div class="col-sm-10">
+                    <input type="text"  id="lables" name="labels">
+                </div>
+              <% } %>  
+            </div>
+            <div class="mb-3 row">
+                <label for="author" class="col-sm-2 col-form-label">Author Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="author" value="<%= locals.user.name %>" readonly>
+                </div>
+            </div>
+            <button type="submit" >Create Issue</button>
         </form>
     </div>
 </div>

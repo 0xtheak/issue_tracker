@@ -4,12 +4,18 @@ const Issue = require('../models/Issue');
 
 module.exports = {
     create : (req, res) => {
+        if(!req.isAuthenticated()){
+            return res.redirect('/');
+        }
         return res.render('create', {
             title : 'Create Project',
         });
     }, 
     createPost : async (req, res) => {
         try {
+            if(!req.isAuthenticated()){
+                return res.redirect('/');
+            }
             const { title, description, author, id, type } = req.body;
             
             const project = new Project({
@@ -37,42 +43,47 @@ module.exports = {
 
     viewProject: async (req, res) => {
         try {
+            if(!req.isAuthenticated()){
+                return res.redirect('/');
+            }
             const slug = req.params.slug;
             const project = await Project.findOne({ slug: slug }).populate('issues').exec();
             if (project) {
                 let title = project.title;
                 return res.render('view', { project, title });
             }
-            req.session.message = {
-                type: 'error',
-                message: 'Project Not Found'
-            };
+            req.flash("error", "Project not found!")
             return res.redirect('/');
         } catch (error) {
-            req.session.message = {
-                type: 'error',
-                message: 'Project Not Found'
-            };
+            req.flash("error", "Project not found!")
             return res.redirect('/');
         }
     },
-    createIssue: async (req, resp) => {
+    createIssue: async (req, res) => {
         try {
+            if(!req.isAuthenticated()){
+                return res.redirect('/');
+            }
             const projectId = req.params.id;
             const project = await Project.findById(projectId).exec();
+            const issues = await Issue.findById(project._id).exec();
+            console.log(issues)
             if (!project) {
                 req.flash("error", "Project not found!");
-                return resp.status(404).redirect('back');
+                return res.status(404).redirect('back');
             }
             const title = `Issues for ${project.title}`;
-            return resp.render('createIssue', { project, title });
+            return res.render('createIssue', { project, title, issues });
         } catch (error) {
             req.flash("error", "Something went wrong!");
-            return resp.redirect('/');
+            return res.redirect('/');
         }
     },
     createIssuePost: async (req, res) => {
         try {
+            if(!req.isAuthenticated()){
+                return res.redirect('/');
+            }
             
             const projectId = req.params.id;
             const project = await Project.findById(projectId).exec();
@@ -80,7 +91,7 @@ module.exports = {
                 req.flash("error", "Project not found!");
                 return res.status(404).redirect('/');
             }
-            const { title, description } = req.body;
+            const { title, description, labels } = req.body;
             if (!title || !description) {
                 
                 req.flash("error", "Title and description are required fields");
@@ -91,7 +102,8 @@ module.exports = {
                 user: user._id,
                 title: title,
                 description: description,
-                project: project._id
+                project: project._id,
+                labels : labels
             });
             const result = await newIssue.save();
             if (!result) {
@@ -132,6 +144,9 @@ module.exports = {
     },
     removeProject : async (req, res) => {
         try {
+            if(!req.isAuthenticated()){
+                return res.redirect('/');
+            }
             let project = await Project.findByIdAndUpdate(req.params.id, {
                 $pullAll : {}
             });
