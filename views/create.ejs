@@ -1,27 +1,25 @@
 <div class="create-container">
-    <div class="card mt-5">
-        <form action="/project/create" method="post">
-            <div class="mb-3 row">
-                <label for="title" class="col-sm-2 col-form-label">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control"  name="description">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="author" class="col-sm-2 col-form-label">Author Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="author" value="<%= locals.user.name %>" readonly>
-                </div>
-            </div>
-                <input type="hidden" class="form-control" name="id" value="<%= locals.user._id %>" >
-                
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
-    </div>
-</div>
+    <form action="/project/create" method="post">
+      <div id="create-project-title">
+        <label for="title">Title</label>
+        <div class="col-sm-10">
+          <input type="text" name="title">
+        </div>
+      </div>
+      <div id="create-project-description">
+        <label for="description">Description</label>
+        <div>
+          <input type="text" name="description">
+        </div>
+      </div>
+      <div id="create-project-author">
+        <label for="author">Author Name</label>
+        <div>
+          <input type="text" name="author" value="<%= locals.user.name %>" readonly>
+        </div>
+      </div>
+      <input type="hidden" name="id" value="<%= locals.user._id %>">
+      <button type="submit" id="create-project-btn">Create Project</button>
+    </form>
+  </div>
+  

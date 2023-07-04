@@ -1,0 +1,122 @@
+.index-container {
+  margin: 10px;
+  padding: 10px; }
+
+/* CSS styles for the filter project */
+#top-index-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+#filter-project {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+
+#filter-project form {
+  display: flex;
+  align-items: center;
+  gap: 10px; }
+
+#filter-project label {
+  display: flex;
+  align-items: center;
+  font-size: 16px; }
+
+#filter-project input[type="radio"] {
+  margin-right: 5px; }
+
+#filter-project input[type="submit"] {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px; }
+
+/* CSS styles for the search project */
+.search-container {
+  display: flex;
+  align-items: center; }
+
+.search {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 4px;
+  height: 25px;
+  outline: none; }
+
+.search-button {
+  height: 35px;
+  padding: 6px 10px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer; }
+
+#bottom-index-container {
+  margin-bottom: 20px; }
+
+#public-project {
+  text-align: center; }
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; }
+
+.project-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+
+.project-card i {
+  font-size: 24px;
+  margin-bottom: 10px; }
+
+.project-card h2 {
+  margin-bottom: 10px; }
+
+.project-card p {
+  margin-bottom: 20px; }
+
+.view-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none; }
+
+.view-button:hover {
+  background-color: #45a049; }
+
+/* No projects message */
+.no-projects {
+  color: #555;
+  margin-top: 20px; }
+
+/* Create project button */
+#create-project-btn {
+  text-align: center; }
+
+#create-project-button {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px; }
+
+#create-project-button:hover {
+  background-color: #45a049; }

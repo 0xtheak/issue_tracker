@@ -1,11 +1,58 @@
 .view-card {
-  font-size: 25px;
-  margin-left: 20px; }
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
 
-.view-card-body p {
-  font-size: 25px; }
+.view-card-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px; }
+
+.view-card-text {
+  font-size: 18px;
+  margin-bottom: 5px; }
+
+.view-card-issues {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px; }
 
 .list-issues {
-  list-style: none; }
-  .list-issues li {
-    text-decoration: none; }
+  list-style-type: none;
+  padding: 0;
+  margin: 0; }
+
+.list-issues-item {
+  margin-bottom: 5px; }
+
+#pending {
+  color: orange; }
+
+#resolved {
+  color: green; }
+
+#rejected {
+  color: red; }
+
+.issues-button {
+  margin-top: 20px; }
+
+#create-issue-btn,
+#delete-project-btn {
+  display: inline-block;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px; }
+
+#delete-project-btn {
+  background-color: #f34747; }
+
+#create-issue-btn:hover {
+  background-color: green; }
+
+#delete-project-btn:hover {
+  background-color: red; }

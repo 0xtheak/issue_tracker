@@ -1,33 +1,46 @@
 <div class="view-card">
     <div class="view-card-body">
-        <h5 class="view-card-title"><strong>Title:</strong>  <%= project.title  %></h5>
-        <p class="view-card-text"><strong>Description:</strong>  <%- project.description  %></p>
-        <p class="view-card-text"><strong>Author:</strong><%= project.author  %></p>
-        <p class="view-card-text"><strong>Date:</strong><%= new Date(project.createdAt)  %></p>
-        <h6 class="view-card-issues">Issues:</h6>
-        
-        <% if (project?.issues?.length > 0) { %>
-            <ul class="list-issues">
-                <% project.issues.forEach(issue => { %>
-                    <li class="list-issues-item">Issue: <%= issue.title %></li>
-                    <li class="list-issues-item">Description : <%= issue.description %></li>
-                   <% if(issue.status == 'PENDING') {%>
-                    <li class="list-issues-item" id="pending"> status : <%= issue.status %></li>
-                   <% } %>
-                   <% if(issue.status == 'RESOLVED') {%>
-                    <li class="list-issues-item" id="resolved"> status : <%= issue.status %></li>
-                   <% } %>
-                   <% if(issue.status == 'REJECTED') {%>
-                    <li class="list-issues-item" id="rejected"> status : <%= issue.status %></li>
-                   <% } %>
-                <% }); %>
-            </ul>
-        <% }else{ %>
-            <p>No Issues Found </p>
+      <h5 class="view-card-title"><strong>Title:</strong> <%= project.title %></h5>
+      <p class="view-card-text"><strong>Description:</strong> <%= project.description %></p>
+      <p class="view-card-text"><strong>Author:</strong> <%= project.author %></p>
+      <p class="view-card-text"><strong>Date:</strong> <%= new Date(project.createdAt) %></p>
+      <h6 class="view-card-issues">Issues:</h6>
+  
+      <% if (project?.issues?.length > 0) { %>
+      <ul class="list-issues">
+        <% project.issues.forEach(issue => { %>
+        <li class="list-issues-item">
+          <p><strong>Issue title:</strong> <%= issue.title %></p>
+        </li>
+        <li class="list-issues-item">
+          <p><strong>Issue description:</strong> <%= issue.description %></p>
+        </li>
+        <% if(issue.status == 'PENDING') { %>
+        <li class="list-issues-item" id="pending">
+          <p><strong>Issue status:</strong> <span id="issue-pending"><%= issue.status %></span></p>
+        </li>
         <% } %>
-        <div class="issues-button">
-            <a href="/project/issues/<%= project?._id %>/create" >Create Issue</a>
-            <a href="/project/<%= project?._id %>/remove" >Delete Project</a>
-        </div>
+        <% if(issue.status == 'RESOLVED') { %>
+        <li class="list-issues-item" id="resolved">
+          <p><strong>Issue status:</strong> <span id="issue-resolved"><%= issue.status %></span></p>
+        </li>
+        <% } %>
+        <% if(issue.status == 'REJECTED') { %>
+        <li class="list-issues-item" id="rejected">
+          <p><strong>Issue status:</strong> <span id="issue-rejected"><%= issue.status %></span></p>
+        </li>
+        <% } %>
+        <br>
+        <% }); %>
+      </ul>
+      <% } else { %>
+      <p>No Issues Found</p>
+      <% } %>
+  
+      <div class="issues-button">
+        <a href="/project/issues/<%= project?._id %>/create" id="create-issue-btn">Create Issue</a>
+        <a href="/project/<%= project?._id %>/remove" id="delete-project-btn">Delete Project</a>
+      </div>
     </div>
-</div>  
+  </div>
+  

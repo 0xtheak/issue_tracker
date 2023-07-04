@@ -160,9 +160,7 @@ module.exports = {
     },
     removeProject : async (req, res) => {
         try {
-            if(!req.isAuthenticated()){
-                return res.redirect('/');
-            }
+            
             let project = await Project.findByIdAndUpdate(req.params.id, {
                 $pullAll : {}
             });
