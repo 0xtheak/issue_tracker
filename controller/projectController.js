@@ -158,26 +158,24 @@ module.exports = {
             return res.status(500).redirect('/');
         }
     },
-    removeProject : async (req, res) => {
+    removeProject: async (req, res) => {
         try {
-            
-            let project = await Project.findByIdAndUpdate(req.params.id, {
-                $pullAll : {}
-            });
-            project.remove();
-            const saveToUser = await User.findOneAndUpdate(
-                {
-                    projects: { $elemMatch: { project: project._id } }
-                },
-                {
-                    $pullAll: { 'projects.$.issues': result._id }
-                },
-                {
-                    new: true
-                }
-            ); 
-        }catch {
-            return;
+            const projectId = req.params.id;
+            const project = await Project.findByIdAndRemove(projectId);
+            if (!project) {
+                return res.status(404).json({ error: 'Project not found' });
+            }
+            await User.updateOne(
+                { 'projects.project': projectId },
+                { $pull: { projects: { project: projectId } } }
+            );
+            await Issue.deleteMany({ project: projectId });
+            req.flash("success", `Project Deleted successfully`)
+            return res.status(200).redirect('/');
+        } catch (error) {
+            console.error(error);
+            req.flash("error", `${error.message || 'Internal Error'}`)
+            return res.status(500).redirect('/');
         }
     }
 }
