@@ -1,22 +1,41 @@
 <div class="index-container">
-    <div id="top-index-container">
+    <div id="top-index-container" >
         <a href="/project/create" id="create-project-button">Create-Project</a>
     </div>
     <div id="middle-index-container">
+        <div id="filter-project">
+            <form action="/" method="POST">
+                <input type="radio" id="author" name="flexRadio" value="author">
+                <label for="author">Author</label><br>
+                <input type="radio" id="title"  name="flexRadio" value="title">
+                <label for="title">Title</label><br>
+                <input type="radio" id="description" name="flexRadio" value="description">
+                <label for="description">Description</label> 
+                <input type="submit" value="filter">
+            </form>
+        </div>
+        <div id="search-project">
+            <form action="/project/search" method="post">
+                <input type="text" name="search"  id="search" placeholder="search project by title/description">
+                <button value="submit">search</button>
+            </form>
+        </div>
+        
     </div>
     <div id="bottom-index-container">
         <div id="public-project">
             <div class="col-md-6">
-                <h2 class="pb-2 border-bottom">All Public Projects</h2>
+                <h2 class="pb-2 border-bottom">All Projects</h2>
                 <% if (typeof projects != 'undefined' && projects.length > 0) { %>
                     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                         <% projects.forEach(project => { %>
                             <div class="feature col">
                                 <div class="feature-icon bg-primary bg-gradient">
-                                    <i class="fa fa-folder-open-o"></i>
+                                    
                                 </div>
+                                <i class="fa fa-folder-open-o"></i>
                                 <h2><%= project.title  %></h2>
-                                <%- project.description   %>
+                                <%= project.description   %>
                                 <a href="<%= `/project/${project.slug}`  %>" class="icon-link">
                                     View
                                 </a>
@@ -30,33 +49,6 @@
                 <% } %>
             </div>
         </div>
-        <div id="private-projects">
-            <div class="col-md-6">
-                <h2 class="pb-2 border-bottom">Your Projects</h2>
-                <% if (typeof privateProjects != 'undefined' && privateProjects.length > 0) { %>
-                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                        <% privateProjects.forEach(project => { %>
-                            <div class="feature col">
-                                <div class="feature-icon bg-primary bg-gradient">
-                                    <i class="fa fa-folder-open-o"></i>
-                                </div>
-                                <h2><%= project.title  %></h2>
-                                <%- project.description   %>
-                                <a href="<%= `/project/${project.slug}`  %>" class="icon-link">
-                                    View
-                                    <svg class="bi" width="1em" height="1em">
-                                        <use xlink:href="#chevron-right" />
-                                    </svg>
-                                </a>
-                            </div>
-                        <% }); %>
-                    </div>
-                <% }else{ %>
-                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                        <h1 class="text-center">No Projects Found</h1>
-                    </div>
-                <% } %>
-            </div>
-        </div>
+        
     </div>
 </div>

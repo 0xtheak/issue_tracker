@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0; }
 
-.container {
+.login-container {
   max-width: 400px;
   margin: 100px auto;
   padding: 30px;
@@ -13,10 +13,10 @@ body {
   border-radius: 10px;
   text-align: center; }
 
-.logo {
+.login-logo {
   margin-bottom: 20px; }
 
-.logo img {
+.login-logo img {
   max-width: 100px;
   height: auto; }
 
@@ -25,36 +25,33 @@ h2 {
   margin-bottom: 30px;
   color: #333333; }
 
-.form-group {
+.login-form-group {
   margin: 20px auto; }
-
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-right: 0;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  font-size: 14px; }
-
-button[type="submit"] {
-  background-color: #47a3da;
-  width: 101%;
-  color: #ffffff;
-  border: none;
-  padding: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase; }
-
-button[type="submit"]:hover {
-  background-color: #1c8bc8; }
+  .login-form-group input[type="text"],
+  .login-form-group input[type="password"],
+  .login-form-group input[type="email"] {
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 0;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 14px; }
+  .login-form-group button[type="submit"] {
+    background-color: #47a3da;
+    width: 101%;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase; }
+  .login-form-group button[type="submit"]:hover {
+    background-color: #1c8bc8; }
 
 p {
   font-size: 14px;

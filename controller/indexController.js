@@ -5,11 +5,39 @@ const saltRounds = 10;
 
 module.exports  = {
     index : async(req,res) => {
+        
         let title = 'Issue Tracker';
-        const projects = await Project.find({type : 'PUBLIC'});
-        const privateProjects = await Project.find({user : res.locals.user._id});
-        return res.render('index',{title, projects, privateProjects});
+        const projects = await Project.find({});
+        console.log(projects)
+      
+        return res.render('index',{title, projects});
     },
+    filterProjectDetails : async (req, res) => {
+        try {
+            
+            
+            const filReq = req.body;
+            
+            if(filReq.flexRadio == 'author'){
+                const projects = await Project.find().sort({"author" : 1});
+               
+                return res.render('index',{title : 'Issue Tracker', projects});
+            }
+            if(filReq.flexRadio == 'title'){
+                const projects = await Project.find().sort({"title" : 1});
+                
+                return res.render('index',{title : 'Issue Tracker', projects});
+            }
+            if(filReq.flexRadio == 'description'){
+                const projects = await Project.find().sort({"description" : 1});
+                
+                return res.render('index',{title : 'Issue Tracker', projects});
+            }
+        }catch {
+            req.flash("error", "Internal server error");
+            return res.redirect('back' || '/');
+        }
+    }, 
     login : (req, res) => {
         if(req.isAuthenticated()){
             return res.redirect('/');
@@ -88,9 +116,7 @@ module.exports  = {
     },
 
     profile : function(req, res) {
-        if(!req.isAuthenticated){
-            return res.redirect('/login');
-        }
+        
 
         return res.render('profile', {
             title : 'Profile'
@@ -99,9 +125,7 @@ module.exports  = {
 
     profilePost : async function(req, res){
         try{
-            if(!req.isAuthenticated){
-                return res.redirect('/login');
-            }
+            
             const {current_password, new_password, confirm_password, id} = req.body;
             if(new_password != confirm_password){
                 req.flash("error", "new password and confirm password didn't match");

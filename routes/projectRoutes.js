@@ -3,6 +3,10 @@ const router = express.Router();
 const passport = require('passport');
 const projectController = require('../controller/projectController');
 
+// project search
+router.route('/search')
+    .post(passport.checkAuthetication, projectController.searchProject)
+
 // project create 
 router.route('/create')
     .get(passport.checkAuthetication, projectController.create)
@@ -10,15 +14,17 @@ router.route('/create')
 
 // project view
 router.route('/:slug')
-    .get(projectController.viewProject)
+    .get(passport.checkAuthetication, projectController.viewProject)
 
 // project issue handler routes
 router.route('/issues/:id/create')
-    .get(projectController.createIssue)
-    .post(projectController.createIssuePost);
+    .get(passport.checkAuthetication, projectController.createIssue)
+    .post(passport.checkAuthetication, projectController.createIssuePost);
 
-
+// project delete route
 router.route('/:id/remove')
-    .get(projectController.removeProject)
+    .get(passport.checkAuthetication, projectController.removeProject)
+
+
 
 module.exports = router;

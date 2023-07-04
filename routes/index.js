@@ -5,7 +5,8 @@ const indexController = require('../controller/indexController');
 
 // home route
 router.route('/')
-    .get(passport.checkAuthetication, indexController.index);
+    .get(passport.checkAuthetication, indexController.index)
+    .post(passport.checkAuthetication, indexController.filterProjectDetails)
 
 // login route
 router.route('/login')
@@ -30,14 +31,15 @@ router.route('/auth/google/')
 router.route('/auth/google/callback')
         .get(passport.authenticate('google', {failureRedirect : '/login'}), indexController.loginPost)
 
+
 // profile route
 router.route('/profile')
-        .get(indexController.profile)
-        .post(indexController.profilePost)
+        .get(passport.checkAuthetication, indexController.profile)
+        .post(passport.checkAuthetication, indexController.profilePost)
 
 // session destroy route
 router.route('/logout')
-        .get(indexController.logout)
+        .get(passport.checkAuthetication, indexController.logout)
 
 
 // project route

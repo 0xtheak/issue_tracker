@@ -1,58 +1,33 @@
 <div class="view-card">
-    <form id="filterForm">
-        <label for="labelFilter">Label:</label>
-        <input type="text" id="labelFilter" name="labelFilter" placeholder="Search By Label">
-    
-        <label for="authorFilter">Author:</label>
-        <input type="text" id="authorFilter" name="authorFilter" placeholder="Search By Author Name">
-    
-        <label for="searchQuery">Search:</label>
-        <input type="text" id="searchQuery" name="searchQuery" placeholder="Search By Title/Description">
-    
-        <button type="submit">Filter</button>
-    </form>
-      
     <div class="view-card-body">
-        <h5 class="card-title"><strong>Title:</strong>  <%= project.title  %></h5>
-        <p class="card-text"><strong>Description:</strong>  <%- project.description  %></p>
-        <p class="card-text"><strong>Author:</strong><%= project.author  %></p>
-        <p class="card-text"><strong>Date:</strong><%= new Date(project.createdAt)  %></p>
-        <h6 class="card-subtitle mb-2 text-muted">Issues:</h6>
-        <a href="/project/issues/<%= project?._id %>/create" >Create Issue</a>
-        <a href="/project/<%= project?._id %>/remove" >Delete Project</a>
+        <h5 class="view-card-title"><strong>Title:</strong>  <%= project.title  %></h5>
+        <p class="view-card-text"><strong>Description:</strong>  <%- project.description  %></p>
+        <p class="view-card-text"><strong>Author:</strong><%= project.author  %></p>
+        <p class="view-card-text"><strong>Date:</strong><%= new Date(project.createdAt)  %></p>
+        <h6 class="view-card-issues">Issues:</h6>
+        
         <% if (project?.issues?.length > 0) { %>
-            <ul class="list-group list-group-flush">
-                <% project.issues.forEach(issues => { %>
-                    <li class="list-group-item"><%= issues.title %></li>
-                    <li class="list-group-item"><%= issues.description %></li>
-                    <li class="list-group-item"><%= issues.status %></li>
+            <ul class="list-issues">
+                <% project.issues.forEach(issue => { %>
+                    <li class="list-issues-item">Issue: <%= issue.title %></li>
+                    <li class="list-issues-item">Description : <%= issue.description %></li>
+                   <% if(issue.status == 'PENDING') {%>
+                    <li class="list-issues-item" id="pending"> status : <%= issue.status %></li>
+                   <% } %>
+                   <% if(issue.status == 'RESOLVED') {%>
+                    <li class="list-issues-item" id="resolved"> status : <%= issue.status %></li>
+                   <% } %>
+                   <% if(issue.status == 'REJECTED') {%>
+                    <li class="list-issues-item" id="rejected"> status : <%= issue.status %></li>
+                   <% } %>
                 <% }); %>
             </ul>
         <% }else{ %>
             <p>No Issues Found </p>
         <% } %>
+        <div class="issues-button">
+            <a href="/project/issues/<%= project?._id %>/create" >Create Issue</a>
+            <a href="/project/<%= project?._id %>/remove" >Delete Project</a>
+        </div>
     </div>
-</div>
-<script>
-    $('#filterForm').on('submit', function (e) {
-        e.preventDefault();
-        var label = $('#labelFilter').val();
-        var author = $('#authorFilter').val();
-        var search = $('#searchQuery').val();
-        var currentUrl = window.location.href;
-        var desiredValue = currentUrl.split('/').pop();
-        var url = '/project/' + desiredValue;
-        var existingParamsIndex = window.location.href.indexOf('?');
-        if (existingParamsIndex !== -1) {
-            url = window.location.href.substr(0, existingParamsIndex);
-        }
-        url += '?label=' + encodeURIComponent(label) +
-            '&author=' + encodeURIComponent(author) +
-            '&search=' + encodeURIComponent(search);
-        window.location.href = url;
-    });
-
-</script>
-    
-  
-   
+</div>  
