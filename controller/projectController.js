@@ -163,7 +163,8 @@ module.exports = {
             const projectId = req.params.id;
             const project = await Project.findByIdAndRemove(projectId);
             if (!project) {
-                return res.status(404).json({ error: 'Project not found' });
+                req.flash("error", "Project not found!")
+                return res.redirect('back');
             }
             await User.updateOne(
                 { 'projects.project': projectId },
