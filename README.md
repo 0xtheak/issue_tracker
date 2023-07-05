@@ -1,6 +1,6 @@
 Issue Tracker
 
-The Issue Tracker is a sophisticated web application built with Node.js and EJS that allows you to efficiently track issues and bugs for your projects. With its elegant user interface and powerful features, it enables seamless management of project-related issues and promotes effective collaboration within your team.
+The Issue Tracker is a web application built with Node.js and EJS that allows you to efficiently track issues and bugs for your projects. With its elegant user interface and powerful features, it enables seamless management of project-related issues and promotes effective collaboration within your team.
 Features
 
     Home Page: View a list of projects and easily create new projects.
@@ -37,10 +37,8 @@ Create a .env file in the root directory of the project and set the following va
 
 bash
 
-PORT=3000
 MONGODB_URI=<your_mongodb_uri>
 
-    PORT: The port on which the application will run (default is 3000).
     MONGODB_URI: The URI for your MongoDB database.
 
 Run the application:

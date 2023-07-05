@@ -22,7 +22,7 @@
     font-size: 14px; }
 
 button[type="submit"] {
-  background-color: #5ee646;
+  background-color: #4caf50;
   width: 101%;
   color: #ffffff;
   border: none;
@@ -34,4 +34,4 @@ button[type="submit"] {
   text-transform: uppercase; }
 
 button[type="submit"]:hover {
-  background-color: #1ce22d; }
+  background-color: green; }
