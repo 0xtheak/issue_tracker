@@ -19,42 +19,17 @@ Getting Started
 Follow the steps below to set up and run the Issue Tracker application:
 
     Clone the repository:
-
-    bash
-
-git clone https://github.com/0xtheak/issue_tracker
+    git clone https://github.com/0xtheak/issue_tracker
 
 Install dependencies:
 
-bash
-
-cd issue-tracker
-npm install
+    cd issue-tracker
+    npm install
 
 Configure the environment variables:
 
 Create a .env file in the root directory of the project and set the following variables:
 
-bash
-
-MONGODB_URI=<your_mongodb_uri>
-
-    MONGODB_URI: The URI for your MongoDB database.
-
-Run the application:
-
-bash
-
-    npm start
-
-    Access the application:
-
-    Open your preferred web browser and go to http://localhost:3000 to access the Issue Tracker.
-
-
-
-The following environment variables are used in the Issue Tracker application:
-    create a .env file in the home folder 
 
     use these variables
 
@@ -66,6 +41,16 @@ The following environment variables are used in the Issue Tracker application:
     GoogleCallbackURL="http://localhost:3000/auth/google/callback"
 
 Ensure that you set these variables appropriately in the .env file before running the application.
+
+Run the application:
+
+
+    npm start
+
+    Access the application:
+    Open your preferred web browser and go to http://localhost:3000 to access the Issue Tracker.
+
+
 Contributing
 
 Contributions to enhance the Issue Tracker application are always welcome. If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request. Your contributions will be highly appreciated.
