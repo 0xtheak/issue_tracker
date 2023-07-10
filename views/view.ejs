@@ -6,9 +6,12 @@
       <p class="view-card-text"><strong>Date:</strong> <%= new Date(project.createdAt) %></p>
       <h6 class="view-card-issues">Issues:</h6>
   
+       
       <% if (project?.issues?.length > 0) { %>
+        
       <ul class="list-issues">
         <% project.issues.forEach(issue => { %>
+          
         <li class="list-issues-item">
           <p><strong>Issue title:</strong> <%= issue.title %></p>
         </li>
@@ -19,6 +22,7 @@
         <li class="list-issues-item" id="pending">
           <p><strong>Issue status:</strong> <span id="issue-pending"><%= issue.status %></span></p>
         </li>
+         
         <% } %>
         <% if(issue.status == 'RESOLVED') { %>
         <li class="list-issues-item" id="resolved">
@@ -30,16 +34,25 @@
           <p><strong>Issue status:</strong> <span id="issue-rejected"><%= issue.status %></span></p>
         </li>
         <% } %>
+        
         <br>
+        
+        
         <% }); %>
+        
+        
       </ul>
       <% } else { %>
       <p>No Issues Found</p>
       <% } %>
   
+      <% locals.user.project %>
       <div class="issues-button">
         <a href="/project/issues/<%= project?._id %>/create" id="create-issue-btn">Create Issue</a>
-        <a href="/project/<%= project?._id %>/remove" id="delete-project-btn">Delete Project</a>
+        <% if( locals.user._id != project.user._id) {%>
+          
+          <a href="/project/<%= project?._id %>/remove" id="delete-project-btn">Delete Project</a>
+        <%} %>
       </div>
     </div>
   </div>

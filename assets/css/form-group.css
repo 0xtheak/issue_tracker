@@ -1,4 +1,4 @@
-.create-issue-container {
+.create-container, .create-issue-container, .profile-container {
   max-width: 400px;
   margin: 100px auto;
   padding: 30px;
@@ -6,11 +6,13 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px; }
 
-.create-form-group {
+.create-form-group, .profile-form-group {
   margin: 20px auto; }
   .create-form-group div input[type="text"],
   .create-form-group div input[type="password"],
-  .create-form-group div input[type="email"] {
+  .create-form-group div input[type="email"], .profile-form-group div input[type="text"],
+  .profile-form-group div input[type="password"],
+  .profile-form-group div input[type="email"] {
     width: 100%;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -30,8 +32,17 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase; }
+  font-weight: bold; }
 
 button[type="submit"]:hover {
   background-color: green; }
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  min-width: 400px;
+  height: 50px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  border: 1px solid #dddddd; }

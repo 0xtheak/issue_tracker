@@ -1,27 +1,27 @@
 <div class="profile-container">
   <h1>Welcome, <%= locals?.user?.name %></h1>
-  <form action="/profile" method="POST">
-    <div class="profile-form-group">
-      <label for="currentPassword">Current Password:</label>
-      <div class="input-container">
-        <input type="password" id="currentPassword" name="current_password" required>
+  <form action="/profile" method="post">
+      <div class="profile-form-group">
+        <label for="currentPassword">Current Password:</label>
+        <div>
+          <input type="password" id="currentPassword" name="current_password" required>
+        </div>
       </div>
-    </div>
-    <div class="profile-form-group">
-      <label for="newPassword">New Password:</label>
-      <div class="input-container">
-        <input type="password" id="newPassword" name="new_password" required>
+      <div class="profile-form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <div>
+          <input type="password" name="confirm_password" required>
+        </div>
       </div>
-    </div>
-    <div class="profile-form-group">
-      <label for="confirmPassword">Confirm Password:</label>
-      <div class="input-container">
-        <input type="password" name="confirm_password" required>
+      <div class="profile-form-group">
+        <label for="newPassword">New Password:</label>
+        <div >
+          <input type="password" id="newPassword" name="new_password" required>
+        </div>
       </div>
-    </div>
-    <input type="hidden" name="id" value="<%= locals?.user?._id %>">
-    <div class="profile-form-group">
-      <button class="btn">Change Password</button>
-    </div>
+        
+      <input type="hidden" name="id" value="<%= locals?.user?._id %>">
+      <button type="submit" >Change password</button>
   </form>
+  
 </div>

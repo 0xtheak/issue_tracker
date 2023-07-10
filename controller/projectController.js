@@ -66,7 +66,7 @@ module.exports = {
             const project = await Project.findOne({ slug: slug }).populate('issues').exec();
             if (project) {
                 let title = project.title;
-                return res.render('view', { project, title });
+                return res.render('view', {  title, project });
             }
             req.flash("error", "Project not found!")
             return res.redirect('/');
@@ -108,6 +108,7 @@ module.exports = {
                 return res.status(404).redirect('/');
             }
             const { title, description, labels } = req.body;
+            console.log(labels);
             if (!title || !description) {
                 
                 req.flash("error", "Title and description are required fields");
@@ -119,7 +120,6 @@ module.exports = {
                 title: title,
                 description: description,
                 project: project._id,
-                labels : labels
             });
             const result = await newIssue.save();
             if (!result) {
@@ -151,6 +151,15 @@ module.exports = {
                 return res.status(500).redirect('back');
             }
             
+            if(labels){
+                const saveProjectLabels = await Project.findByIdAndUpdate(project._id, {$push : {labels : labels}}, {new:  true});
+            if(!saveProjectLabels){
+                req.flash("error", `Issue with title '${title}' is saved in issue table  for project ${project.title} also saved in user table but labels did not saved`)
+                return res.status(500).redirect('back');  
+            }
+            }
+
+
             req.flash("success", `Issue for ${title} was successfully created`)
             return res.status(201).redirect('/project/' + saveToProjectTable.slug);
         } catch (error) {

@@ -17,7 +17,7 @@ const issueSchema = new mongoose.Schema({
     },
     project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    labels: []
+    
 },{timestamps:true})
 issueSchema.plugin(URLSlugs('title'));
 module.exports  = mongoose.model('Issue',issueSchema);

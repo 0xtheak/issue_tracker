@@ -1,5 +1,5 @@
 <div class="create-issue-container">
-    
+    <h2>Create issue for the <%= project.title %> project</h2>
     <form method="post">
         <div class="create-form-group">
             <label for="title" >Title</label>
@@ -15,20 +15,26 @@
         </div>
 
         <div class="create-form-group">
-            <% if(issues?.labels?.length>0) { %>
-                <label for="labels">Choose a label</label>
-                <select name="labels" id="labels">
-            <% issues.labels.forEach(label => { %>
-                <option value="<%= label %>"><%= label %></option>
-            <% }); %>
-                </select>
-                <% } else { %>
-            <label for="lables" >Labels</label>
-            <div >
-                <input type="text"  id="lables" name="labels">
-            </div>
-            <% } %>  
-        </div>
+            <% if (project?.labels?.length > 0) { %>
+              <label for="labels">Choose or Add a label</label>
+              <select name="select-labels" class="select-container" id="label">
+                <% project.labels.forEach(label => { %>
+                  <option value="<%= label %>"><%= label %></option>
+                <% }); %>
+                <option value="other">Add another label</option>
+              </select>
+              <div class="create-form-group">
+                <input type="text" id="labels"  name="labels" >
+              </div>
+              
+            <% } else { %>
+              <label for="labels">Labels</label>
+              <div class="create-form-group">
+                <input type="text" id="labels-default" name="labels">
+              </div>
+            <% } %>
+          </div>
+          
         <div class="create-form-group">
             <label for="author" >Issue creator name</label>
             <div >
@@ -39,3 +45,4 @@
     </form>
     
 </div>
+<script type="text/javascript" src="/js/script.js" ></script>

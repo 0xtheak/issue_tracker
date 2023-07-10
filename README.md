@@ -22,7 +22,7 @@ Follow the steps below to set up and run the Issue Tracker application:
 
     bash
 
-git clone <repository_url>
+git clone https://github.com/0xtheak/issue_tracker
 
 Install dependencies:
 
