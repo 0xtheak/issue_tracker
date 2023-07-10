@@ -56,3 +56,13 @@
 
 #delete-project-btn:hover {
   background-color: red; }
+
+#issue-marked-resolved {
+  text-decoration: none;
+  list-style: none; }
+
+#issue-marked-rejected {
+  text-decoration: none;
+  list-style: none;
+  color: red;
+  margin-left: 10px; }

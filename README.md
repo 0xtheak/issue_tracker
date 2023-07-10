@@ -3,8 +3,8 @@ Issue Tracker
 The Issue Tracker is a web application built with Node.js and EJS that allows you to efficiently track issues and bugs for your projects. With its elegant user interface and powerful features, it enables seamless management of project-related issues and promotes effective collaboration within your team.
 Features
 
-    Home Page: View a list of projects and easily create new projects.
-    Project Detail Page: Explore project-specific issues, apply filters by labels and authors, and search by title and description.
+    Home Page: View a list of projects and easily create new projects, apply filters by labels and authors, and search by title and description.
+    Project Detail Page: Explore project-specific issues, author can resolved the issues or reject them.
     Create Issue Page: Create new issues for a project, including title, description, labels, and author information.
 
 Technologies Used

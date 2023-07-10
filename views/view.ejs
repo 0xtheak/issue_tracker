@@ -5,7 +5,6 @@
       <p class="view-card-text"><strong>Author:</strong> <%= project.author %></p>
       <p class="view-card-text"><strong>Date:</strong> <%= new Date(project.createdAt) %></p>
       <h6 class="view-card-issues">Issues:</h6>
-  
        
       <% if (project?.issues?.length > 0) { %>
         
@@ -20,7 +19,12 @@
         </li>
         <% if(issue.status == 'PENDING') { %>
         <li class="list-issues-item" id="pending">
-          <p><strong>Issue status:</strong> <span id="issue-pending"><%= issue.status %></span></p>
+          <p><strong>Issue status:</strong> <span id="issue-pending"><%= issue.status %></span>
+            <% if( project.user._id.toString() == locals.user._id.toString() ) {%>
+          
+              <a href="/project/issues/<%=issue._id %>/resolve" id="issue-marked-resolved">Marked resolved</a>
+              <a href="/project/issues/<%=issue._id %>/reject" id="issue-marked-rejected">Marked rejected</a>
+            <%} %></p>
         </li>
          
         <% } %>
@@ -34,12 +38,8 @@
           <p><strong>Issue status:</strong> <span id="issue-rejected"><%= issue.status %></span></p>
         </li>
         <% } %>
-        
         <br>
-        
-        
-        <% }); %>
-        
+        <% }); %>        
         
       </ul>
       <% } else { %>
@@ -49,7 +49,7 @@
       <% locals.user.project %>
       <div class="issues-button">
         <a href="/project/issues/<%= project?._id %>/create" id="create-issue-btn">Create Issue</a>
-        <% if( locals.user._id != project.user._id) {%>
+        <% if( project.user._id.toString() == locals.user._id.toString() ) {%>
           
           <a href="/project/<%= project?._id %>/remove" id="delete-project-btn">Delete Project</a>
         <%} %>

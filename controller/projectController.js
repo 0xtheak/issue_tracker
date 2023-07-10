@@ -74,16 +74,43 @@ module.exports = {
             req.flash("error", "Project not found!")
             return res.redirect('/');
         }
-    },      
+    },
+    issueResolved : async (req, res) => {
+        try {
+            const issueId = req.params.id;
+            
+            const issueUpdate = await Issue.findById({_id : issueId});
+            issueUpdate.status = "RESOLVED";
+            issueUpdate.save();
+            req.flash("success", "Issue has been resolved successfully");
+            return res.redirect('back');
+
+        }catch (error) {
+            req.flash("error", "Something went wrong!");
+            return res.redirect('back');
+        }
+    },
+    issueRejected : async (req, res) => {
+        try {
+            const issueId = req.params.id;
+            
+            const issueUpdate = await Issue.findById({_id : issueId});
+            issueUpdate.status = "REJECTED";
+            issueUpdate.save();
+            req.flash("success", "Issue has been rejected successfully");
+            return res.redirect('back');
+
+        }catch (error) {
+            req.flash("error", "Something went wrong!");
+            return res.redirect('back');
+        }
+    },       
     createIssue: async (req, res) => {
         try {
-            if(!req.isAuthenticated()){
-                return res.redirect('/');
-            }
+            
             const projectId = req.params.id;
             const project = await Project.findById(projectId).exec();
             const issues = await Issue.findById(project._id).exec();
-            console.log(issues)
             if (!project) {
                 req.flash("error", "Project not found!");
                 return res.status(404).redirect('back');
